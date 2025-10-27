@@ -23,8 +23,24 @@ export const CreatorProvider = ({ children }) => {
 
     useEffect(() => { load({ page: 1 }); }, []);
 
+    useEffect(() => {
+        load({ page: 1 });
+    }, [query]);
 
-    const refresh = () => load({ page: meta.page });
+
+    const addCreator = (newCreator) => {
+        setCreators(prev => [newCreator, ...prev]);
+    };
+
+    const editCreator = (updatedCreator) => {
+        setCreators(prev =>
+            prev.map(c => c.id === updatedCreator.id ? updatedCreator : c)
+        );
+    };
+
+    const removeCreator = (id) => {
+        setCreators(prev => prev.filter(c => c.id !== id));
+    };
 
     const values = {
         creators,
@@ -33,8 +49,10 @@ export const CreatorProvider = ({ children }) => {
         query,
         setQuery,
         load,
-        refresh,
-        setCreators
+        setCreators,
+        addCreator,
+        editCreator,
+        removeCreator
     }
 
     return (

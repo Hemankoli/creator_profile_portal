@@ -1,26 +1,15 @@
 {
   "creators": [
     {
-      "id": 1,
-      "name": "Aisha Kapoor",
-      "designation": "Fashion Designer",
-      "about": "Fashion designer focusing on sustainable garments.",
-      "price": 1200,
+      "id": 1761566671644,
+      "name": "Hemant Koli",
+      "designation": "Software Enginner",
+      "about": " Full Stack Developer with 1+ year of experience building scalable and responsive web applications. Skilled in Node.js, React.js,  Three.js, and Firebase, with expertise in developing e-commerce platforms, implementing real-time features, and creating interactive  3D visualizations.",
+      "price": "40000",
       "media": [
-        "/public/sample1.jpg"
+        "/uploads/1761566671629-v.jpg"
       ],
-      "createdAt": "2025-10-01T10:00:00Z",
-      "updatedAt": "2025-10-27T08:53:47.937Z"
-    },
-    {
-      "id": 2,
-      "name": "Samir Patel",
-      "designation": "Photographer",
-      "about": "Lifestyle and portraits.",
-      "price": 800,
-      "media": [],
-      "createdAt": "2025-09-28T12:00:00Z",
-      "updatedAt": "2025-10-27T08:52:36.235Z"
+      "createdAt": "2025-10-27T12:04:31.645Z"
     }
   ]
 }

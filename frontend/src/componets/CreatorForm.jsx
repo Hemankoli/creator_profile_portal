@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useCreators } from '../context/CreatorContext';
 import { createCreator, updateCreator } from '../apis';
+import InputField from '../shared/InputField';
 
 
 export default function CreatorForm() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { creators } = useCreators();
+    const { creators, addCreator, editCreator } = useCreators();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -38,26 +38,28 @@ export default function CreatorForm() {
 
 
     const handleFiles = (e) => {
-        setFormData({ ...formData, media: e.targetS.files });
+        setFormData({ ...formData, media: e.target.files });
     };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData();
-        for (const key in formData) {
-            if (key === 'media') {
-                for (let f of formData.media) data.append('media', f);
-            } else {
-                data.append(key, formData[key]);
-            }
-        }
+        data.append("name", formData.name);
+        data.append("designation", formData.designation);
+        data.append("about", formData.about);
+        data.append("price", formData.price);
 
+        for (let i = 0; i < formData.media.length; i++) {
+            data.append("media", formData.media[i]);
+        }
         try {
             if (id) {
-                await updateCreator(id, data);
+                const updated = await updateCreator(id, data);
+                await editCreator(updated)
             } else {
-                await createCreator(data);
+                const created = await createCreator(data);
+                await addCreator(created)
             }
             navigate('/');
         } catch (err) {
@@ -70,64 +72,11 @@ export default function CreatorForm() {
         <div className="max-w-2xl mx-auto bg-[#0B1224] shadow-lg rounded p-6">
             <h2 className="text-2xl font-bold mb-6">{id ? 'Edit Creator' : 'Add New Creator'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block font-medium">Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2 mt-1 outline-none text-black"
-                        required
-                    />
-                </div>
-
-
-                <div>
-                    <label className="block font-medium">Designation</label>
-                    <input
-                        type="text"
-                        name="designation"
-                        value={formData.designation}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2 mt-1 outline-none text-black"
-                    />
-                </div>
-                <div>
-                    <label className="block font-medium">About</label>
-                    <textarea
-                        name="about"
-                        value={formData.about}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2 mt-1 outline-none text-black"
-                        rows="4"
-                    ></textarea>
-                </div>
-
-
-                <div>
-                    <label className="block font-medium">Price (₹)</label>
-                    <input
-                        type="number"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2 mt-1 outline-none text-black"
-                    />
-                </div>
-
-                <div>
-                    <label className="block font-medium">Upload Media</label>
-                    <input
-                        type="file"
-                        multiple
-                        accept="image/*,video/*"
-                        onChange={handleFiles}
-                        className="w-full border border-gray-300 rounded-lg p-2 mt-1 outline-none text-black"
-                    />
-                </div>
-
-
+               <InputField labelName={"Name"} type={"text"} name={"name"} value={formData.name} method={handleChange} />
+               <InputField labelName={"Designation"} type={"text"} name={"designation"} value={formData.designation} method={handleChange} />
+               <InputField labelName={"About"} type={"text"} name={"about"} value={formData.about} method={handleChange} />
+               <InputField labelName={"Price (₹)"} type={"number"} name={"price"} value={formData.price} method={handleChange} />
+               <InputField labelName={"Upload Media"} type="file" name="media" method={handleFiles} />
                 <button
                     type="submit"
                     className="w-full bg-blue-600 text-white px-4 py-2 rounded transition bg-gradient-to-r from-indigo-600 to-purple-600"
