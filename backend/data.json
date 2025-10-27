@@ -1,0 +1,26 @@
+{
+  "creators": [
+    {
+      "id": 1,
+      "name": "Aisha Kapoor",
+      "designation": "Fashion Designer",
+      "about": "Fashion designer focusing on sustainable garments.",
+      "price": 1200,
+      "media": [
+        "/public/sample1.jpg"
+      ],
+      "createdAt": "2025-10-01T10:00:00Z",
+      "updatedAt": "2025-10-27T08:12:16.805Z"
+    },
+    {
+      "id": 2,
+      "name": "Samir Patel",
+      "designation": "Photographer",
+      "about": "Lifestyle and portraits.",
+      "price": 800,
+      "media": [],
+      "createdAt": "2025-09-28T12:00:00Z",
+      "updatedAt": "2025-10-27T08:34:08.363Z"
+    }
+  ]
+}
