@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { fetchCreators } from '../apis';
+import { createLogs, fetchCreators, fetchLogs } from '../apis';
 
 const CreatorContext = createContext();
 
@@ -10,6 +10,21 @@ export const CreatorProvider = ({ children }) => {
     const [meta, setMeta] = useState({ page: 1, limit: 6, total: 0 });
     const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
+    const [user, setUser] = useState(null);
+    const [logs, setLogs] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        if (token && user) {
+            try {
+                setUser(JSON.parse(user));
+            } catch (err) {
+                console.error("Failed to parse user from localStorage", err);
+                localStorage.removeItem("user");
+            }
+        }
+    }, [])
 
     const load = async (opts = {}) => {
         setLoading(true);
@@ -42,6 +57,29 @@ export const CreatorProvider = ({ children }) => {
         setCreators(prev => prev.filter(c => c.id !== id));
     };
 
+    async function handleLogs({ name, changes }) {
+        try {
+            await createLogs({ name, changes })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function getLogs() {
+        try {
+            const data = await fetchLogs();
+            const sortedLogs = data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
+            setLogs(sortedLogs);
+        } catch (error) {
+            console.error("Error fetching logs:", error);
+        }
+    }
+
+
+    useEffect(() => {
+        getLogs();
+    }, [])
+
     const values = {
         creators,
         meta,
@@ -52,7 +90,10 @@ export const CreatorProvider = ({ children }) => {
         setCreators,
         addCreator,
         editCreator,
-        removeCreator
+        removeCreator,
+        user, setUser,
+        handleLogs,
+        logs
     }
 
     return (

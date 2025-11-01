@@ -15,19 +15,22 @@ export default function Card({ creator }) {
                  border border-transparent hover:border-indigo-500 transition-all 
                  duration-300 flex flex-col justify-between min-h-[220px]"
         >
-            <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded bg-gradient-to-r from-indigo-500 to-purple-500 
+            <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded bg-gradient-to-r from-indigo-500 to-purple-500 
                         flex items-center justify-center text-white font-bold text-xl shadow-md">
-                    {initials}
-                </div>
-                <div>
-                    <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-100">
-                        {creator.name}
-                    </h3>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                        {creator.designation || 'Creator'}
+                        {initials}
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-100">
+                            {creator.name}
+                        </h3>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {creator.designation || 'Creator'}
+                        </div>
                     </div>
                 </div>
+                <span className="text-md font-semibold text-blue-600">₹{creator.price} / Month</span>
             </div>
             <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
                 {creator.about || 'No description available.'}

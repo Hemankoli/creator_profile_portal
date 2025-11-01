@@ -6,7 +6,7 @@ import { deleteCreator } from '../apis';
 
 export default function CreatorDetails() {
     const { id } = useParams();
-    const { creators, removeCreator } = useCreators();
+    const { creators, removeCreator, user } = useCreators();
     const [creator, setCreator] = useState(null);
     const navigate = useNavigate();
 
@@ -60,21 +60,25 @@ export default function CreatorDetails() {
 
                     <div className="flex justify-between items-center mt-4">
                         <span className="text-xl font-semibold text-blue-600">₹{creator.price} / Month</span>
-                        <div className='space-x-4'>
-                            <Link
-                                to={`/edit/${creator.id}`}
-                                className="bg-blue-600 text-white px-4 py-2 rounded transition bg-gradient-to-r from-indigo-600 to-purple-600"
-                            >
-                                Edit
-                            </Link>
-                            <button
-                                type="button"
-                                onClick={()=> handleDelete(creator.id)}
-                                className="text-white px-4 py-2 rounded transition bg-red-500 hover-bg-red-600"
-                            >
-                                Delete
-                            </button>
-                        </div>
+
+                        {String(user?.id) === String(creator?.userId) && (
+                            <div className='space-x-4'>
+                                <Link
+                                    to={`/edit/${creator.id}`}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded transition bg-gradient-to-r from-indigo-600 to-purple-600"
+                                >
+                                    Edit
+                                </Link> 
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(creator.id)}
+                                    className="text-white px-4 py-2 rounded transition bg-red-500 hover-bg-red-600"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+
+                        )}
                     </div>
                 </div>
             </div>

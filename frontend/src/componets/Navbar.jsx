@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCreators } from '../context/CreatorContext';
 
 export default function Navbar() {
+  const { user } = useCreators();
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-md bg-gray-800 p-4 md:px-8 shadow-lg">
@@ -18,12 +20,29 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="flex items-center gap-3">
-          <Link
-            to="/add"
-            className="text-sm font-medium px-4 py-2 rounded bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow hover:shadow-lg hover:scale-[1.03] transition-transform duration-300"
-          >
-            + Add Creator
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to="/account"
+                className="text-sm font-medium px-4 py-2 rounded bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow hover:shadow-lg hover:scale-[1.03] transition-transform duration-300"
+              >
+                Account
+              </Link>
+              <Link
+                to="/add"
+                className="text-sm font-medium px-4 py-2 rounded bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow hover:shadow-lg hover:scale-[1.03] transition-transform duration-300"
+              >
+                + Add Creator
+              </Link>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="text-sm font-medium px-4 py-2 rounded bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow hover:shadow-lg hover:scale-[1.03] transition-transform duration-300"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>

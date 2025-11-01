@@ -1,15 +1,119 @@
 {
-  "creators": [
-    {
-      "id": 1761566671644,
-      "name": "Hemant Koli",
-      "designation": "Software Enginner",
-      "about": " Full Stack Developer with 1+ year of experience building scalable and responsive web applications. Skilled in Node.js, React.js,  Three.js, and Firebase, with expertise in developing e-commerce platforms, implementing real-time features, and creating interactive  3D visualizations.",
-      "price": "40000",
-      "media": [
-        "/uploads/1761566671629-v.jpg"
-      ],
-      "createdAt": "2025-10-27T12:04:31.645Z"
-    }
-  ]
+    "creators": [
+        {
+            "id": 1761903804902,
+            "name": "Aisha Kapoor",
+            "designation": "Photographer",
+            "about": "Lifestyle and portraits.",
+            "price": "10000",
+            "media": [],
+            "createdAt": "2025-10-31T09:43:24.902Z",
+            "updatedAt": "2025-10-31T16:18:13.073Z",
+            "userId": "1761914553875"
+        },
+        {
+            "id": 1761903790099,
+            "name": "Ram Lal",
+            "designation": "Fashion Designer",
+            "about": "Fashion designer focusing on sustainable garments.",
+            "price": "2000010",
+            "media": [],
+            "createdAt": "2025-10-31T09:43:10.099Z",
+            "userId": "1761914756661",
+            "updatedAt": "2025-11-01T04:46:02.182Z"
+        },
+        {
+            "id": 1761566671644,
+            "name": "Hemant Koli",
+            "designation": "Software Enginner",
+            "about": " Full Stack Developer with 1+ year of experience building scalable and responsive web applications. Skilled in Node.js, React.js,  Three.js, and Firebase, with expertise in developing e-commerce platforms, implementing real-time features, and creating interactive  3D visualizations.",
+            "price": "400001",
+            "media": [
+                "/uploads/1761566671629-v.jpg"
+            ],
+            "createdAt": "2025-10-27T12:04:31.645Z",
+            "userId": "1761914553875",
+            "updatedAt": "2025-11-01T04:44:25.976Z"
+        }
+    ],
+    "users": [
+        {
+            "id": 1761914553875,
+            "name": "Ram Lal",
+            "email": "rambabu22@gmail.com",
+            "password": "$2b$10$sM/ohQXJz9O9D5xy6J7JAua0/FtmeVgW/oekBwSNxyn4iPOi6kHBG",
+            "role": "admin",
+            "createdAt": "2025-10-31T12:42:33.875Z"
+        },
+        {
+            "id": 1761914756661,
+            "name": "Aisha Kapoor",
+            "email": "test111@gmail.com",
+            "password": "$2b$10$7SiIjnndbziPu.HPU7.jdOUk1HdE/CJdOw/1ULiVYIH0T.4ZT97gS",
+            "role": "user",
+            "createdAt": "2025-10-31T12:45:56.661Z"
+        }
+    ],
+    "logs": [
+        {
+            "id": 1761930231054,
+            "name": "Ram Lal",
+            "changes": "Added the creator undefined",
+            "createdAt": "2025-10-31T17:03:51.054Z"
+        },
+        {
+            "id": 1761930287877,
+            "name": "Ram Lal",
+            "changes": "Added the creator undefined",
+            "createdAt": "2025-10-31T17:04:47.877Z"
+        },
+        {
+            "id": 1761930332854,
+            "name": "Ram Lal",
+            "changes": "Added the creator Ram Lal",
+            "createdAt": "2025-10-31T17:05:32.854Z"
+        },
+        {
+            "id": 1761930375952,
+            "name": "Ram Lal",
+            "changes": "Added the creator Hemant Koli",
+            "createdAt": "2025-10-31T17:06:15.952Z"
+        },
+        {
+            "id": 1761930454569,
+            "name": "Ram Lal",
+            "changes": "Added the creator Hemant Koli",
+            "createdAt": "2025-10-31T17:07:34.569Z"
+        },
+        {
+            "id": 1761930469108,
+            "name": "Ram Lal",
+            "changes": "Added the creator Hemant Koli",
+            "createdAt": "2025-10-31T17:07:49.108Z"
+        },
+        {
+            "id": 1761933953476,
+            "name": "Ram Lal",
+            "changes": "Updated the creator Hemant Koli",
+            "createdAt": "2025-10-31T18:05:53.476Z"
+        },
+        {
+            "id": 1761972143969,
+            "name": "Ram Lal",
+            "changes": "Updated the creator Hemant Koli",
+            "createdAt": "2025-11-01T04:42:23.969Z"
+        },
+        {
+            "id": 1761972266045,
+            "name": "Ram Lal",
+            "changes": "Updated the creator Hemant Koli",
+            "createdAt": "2025-11-01T04:44:26.046Z"
+        },
+        {
+            "id": 1761972362251,
+            "name": "Aisha Kapoor",
+            "changes": "Updated the creator Ram Lal",
+            "createdAt": "2025-11-01T04:46:02.251Z"
+        }
+    ]
 }

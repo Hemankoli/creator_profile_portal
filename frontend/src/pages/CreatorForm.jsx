@@ -8,13 +8,14 @@ import InputField from '../shared/InputField';
 export default function CreatorForm() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { creators, addCreator, editCreator } = useCreators();
+    const { creators, addCreator, editCreator, user, handleLogs } = useCreators();
 
     const [formData, setFormData] = useState({
         name: '',
         designation: '',
         about: '',
         price: '',
+        userId: null,
         media: []
     });
 
@@ -27,6 +28,7 @@ export default function CreatorForm() {
                 designation: found.designation || '',
                 about: found.about || '',
                 price: found.price || '',
+                userId: found.userId || '',
                 media: []
             });
         }
@@ -49,17 +51,21 @@ export default function CreatorForm() {
         data.append("designation", formData.designation);
         data.append("about", formData.about);
         data.append("price", formData.price);
-
+        data.append("userId", user?.id);
         for (let i = 0; i < formData.media.length; i++) {
             data.append("media", formData.media[i]);
         }
         try {
             if (id) {
                 const updated = await updateCreator(id, data);
-                await editCreator(updated)
+                await editCreator(updated);
+                await handleLogs({ name: user?.name, changes: `Updated the creator ${formData?.name}` })
+                console.log(formData.name)
             } else {
                 const created = await createCreator(data);
                 await addCreator(created)
+                await handleLogs({ name: user?.name, changes: `Added the creator ${formData?.name}` })
+
             }
             navigate('/');
         } catch (err) {
@@ -72,11 +78,11 @@ export default function CreatorForm() {
         <div className="max-w-2xl mx-auto bg-[#0B1224] shadow-lg rounded p-6">
             <h2 className="text-2xl font-bold mb-6">{id ? 'Edit Creator' : 'Add New Creator'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-               <InputField labelName={"Name"} type={"text"} name={"name"} value={formData.name} method={handleChange} />
-               <InputField labelName={"Designation"} type={"text"} name={"designation"} value={formData.designation} method={handleChange} />
-               <InputField labelName={"About"} type={"text"} name={"about"} value={formData.about} method={handleChange} />
-               <InputField labelName={"Price (₹)"} type={"number"} name={"price"} value={formData.price} method={handleChange} />
-               <InputField labelName={"Upload Media"} type="file" name="media" method={handleFiles} />
+                <InputField labelName={"Name"} type={"text"} name={"name"} value={formData.name} method={handleChange} />
+                <InputField labelName={"Designation"} type={"text"} name={"designation"} value={formData.designation} method={handleChange} />
+                <InputField labelName={"About"} type={"text"} name={"about"} value={formData.about} method={handleChange} />
+                <InputField labelName={"Price (₹)"} type={"number"} name={"price"} value={formData.price} method={handleChange} />
+                <InputField labelName={"Upload Media"} type="file" name="media" method={handleFiles} />
                 <button
                     type="submit"
                     className="w-full bg-blue-600 text-white px-4 py-2 rounded transition bg-gradient-to-r from-indigo-600 to-purple-600"
