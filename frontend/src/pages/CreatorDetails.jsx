@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCreators } from '../context/CreatorContext';
 import { deleteCreator } from '../apis';
+import { IoMdHeart } from 'react-icons/io';
+import { FaRegHeart } from 'react-icons/fa';
 
 
 export default function CreatorDetails() {
     const { id } = useParams();
-    const { creators, removeCreator, user } = useCreators();
+    const { creators, removeCreator, user, allFava, handleFavaritos } = useCreators();
     const [creator, setCreator] = useState(null);
     const navigate = useNavigate();
+
+
+    const isFavorite = useMemo(() => {
+        return allFava?.some(fav => String(fav.productId) === String(creator?.id));
+    }, [allFava, creator?.id]);
 
 
     useEffect(() => {
@@ -53,11 +60,22 @@ export default function CreatorDetails() {
 
                 <div className="md:w-1/2 flex flex-col justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold mb-2">{creator.name}</h2>
+                        <div className='flex items-center justify-between'>
+                            <h2 className="text-2xl font-bold mb-2">{creator.name}</h2>
+                            <button
+                                onClick={() => handleFavaritos(creator?.id)}
+                                className="text-2xl hover:scale-125 active:scale-95 transition-transform duration-150"
+                            >
+                                {isFavorite ? (
+                                    <IoMdHeart className="text-pink-500 drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]" />
+                                ) : (
+                                    <FaRegHeart className="text-gray-400 hover:text-pink-400" />
+                                )}
+                            </button>
+                        </div>
                         <p className="text-gray-600 mb-1">{creator.designation}</p>
                         <p className="text-gray-500 mb-4">{creator.about}</p>
                     </div>
-
                     <div className="flex justify-between items-center mt-4">
                         <span className="text-xl font-semibold text-blue-600">₹{creator.price} / Month</span>
 
@@ -68,7 +86,7 @@ export default function CreatorDetails() {
                                     className="bg-blue-600 text-white px-4 py-2 rounded transition bg-gradient-to-r from-indigo-600 to-purple-600"
                                 >
                                     Edit
-                                </Link> 
+                                </Link>
                                 <button
                                     type="button"
                                     onClick={() => handleDelete(creator.id)}

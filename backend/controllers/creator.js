@@ -85,14 +85,26 @@ router.delete('/creators/:id', (req, res) => {
 
 router.post("/favaritos/:id", (req, res) => {
   const data = readData();
-  const fav = {
-    id: Date.now(),
-    productId: req.params.id,
+  const productId = req.params.id;
+  const existingIndex = data.favaritos.findIndex(
+    (fav) => String(fav.productId) === String(productId)
+  );
+
+  if (existingIndex !== -1) {
+    const removed = data.favaritos.splice(existingIndex, 1);
+    writeData(data);
+    return res.json({ message: "Removed from favorites", removed: removed[0] });
+  } else {
+    const newFav = {
+      id: Date.now(),
+      productId,
+    };
+    data.favaritos.push(newFav);
+    writeData(data);
+    return res.json({ message: "Added to favorites", fav: newFav });
   }
-  data.favaritos.push(fav);
-  writeData(data)
-  res.json(fav)
-})
+});
+
 
 router.get("/get-favaritos", (req, res) => {
   const data = readData(); 

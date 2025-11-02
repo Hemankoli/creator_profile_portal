@@ -3,10 +3,9 @@ import { useCreators } from '../context/CreatorContext';
 import Card from '../shared/Card';
 import Pagination from '../shared/Pagination';
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { createFavaritos } from '../apis';
 
 export default function Home() {
-    const { creators, loading, query, setQuery, allFava, getData } = useCreators();
+    const { creators, loading, query, setQuery, allFava } = useCreators();
     const [sorting, setSorting] = useState('asc');
     const [filtered, setFiltered] = useState('All');
     const [newCreators, setNewCreators] = useState([]);
@@ -39,15 +38,6 @@ export default function Home() {
         setNewCreators(data);
     }, [creators, sorting, filtered, query, showFavorites, allFava]);
 
-    async function handleFavaritos(id) {
-        try {
-            await createFavaritos(id);
-            await getData();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     return (
         <div className="p-4">
             <h2 className="text-3xl w-fit font-semibold mb-2 md:mb-10 bg-clip-text text-transparent bg-gradient-to-tr from-pink-500 via-purple-500 to-indigo-500">
@@ -64,11 +54,10 @@ export default function Home() {
                     />
                     <button
                         onClick={() => setShowFavorites(prev => !prev)}
-                        className={`border rounded-md flex items-center gap-2 p-2 outline-none text-white ${
-                            showFavorites ? 'bg-blue-600 border-blue-600' : 'bg-gray-900 border-blue-600'
-                        }`}
+                        className={`border rounded-md flex items-center gap-2 p-2 outline-none text-white ${showFavorites ? 'bg-blue-600 border-blue-600' : 'bg-gray-900 border-blue-600'
+                            }`}
                     >
-                        {showFavorites ? 'All Creators' : 'Favorites'}
+                        {"Favorites"}
                     </button>
                 </div>
 
@@ -96,15 +85,19 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {loading ? (
                     <div>Loading...</div>
-                ) : newCreators.length > 0 ? (
-                    newCreators.map(c => (
-                        <Card key={c.id} creator={c} handleFavaritos={handleFavaritos} />
-                    ))
-                ) : (
+                ) : showFavorites && allFava.length === 0 ? (
                     <div className="text-gray-400 col-span-full text-center">
-                        No creators found
-                    </div>
-                )}
+                        No favorites found
+                    </div>)
+                    : newCreators.length > 0 ? (
+                        newCreators.map(c => (
+                            <Card key={c.id} creator={c} />
+                        ))
+                    ) : (
+                        <div className="text-gray-400 col-span-full text-center">
+                            No creators found
+                        </div>
+                    )}
             </div>
 
             <Pagination />

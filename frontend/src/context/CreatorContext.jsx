@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createLogs, fetchCreators, fetchFavaritos, fetchLogs } from '../apis';
+import { createFavaritos, createLogs, fetchCreators, fetchFavaritos, fetchLogs } from '../apis';
 
 const CreatorContext = createContext();
 
@@ -89,10 +89,18 @@ export const CreatorProvider = ({ children }) => {
         }
     }
 
-
     useEffect(() => {
         getLogs();
     }, [])
+
+    async function handleFavaritos(id) {
+            try {
+                await createFavaritos(id);
+                await getData();
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
     const values = {
         creators,
@@ -107,7 +115,7 @@ export const CreatorProvider = ({ children }) => {
         removeCreator,
         user, setUser,
         handleLogs,
-        logs, allFava, getData
+        logs, allFava, handleFavaritos
     }
 
     return (
