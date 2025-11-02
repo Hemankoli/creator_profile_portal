@@ -13,3 +13,5 @@ export const userProtectedRoute = (token) => api.get('/user-auth', { headers: { 
 export const adminProtectedRoute = (token) => api.get('/user-auth', { headers: { Authorization: `Bearer ${token}`}})
 export const fetchLogs = () => api.get('/all-logs').then(r => r.data);
 export const createLogs = (payload) => api.post('/logs', payload).then(r => r.data);
+export const fetchFavaritos = () => api.get('/get-favaritos').then(r => r.data);
+export const createFavaritos = (id) => api.post(`/favaritos/${id}`).then(r => r.data);

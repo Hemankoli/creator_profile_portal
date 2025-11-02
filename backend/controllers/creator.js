@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { upload } = require('../services/multer');
-const { readData, writeData } = require("../services/file")
+const { readData, writeData } = require("../services/file");
 
 router.get('/creators', (req, res) => {
   const { search = '', page = 1, limit = 10, designation = '' } = req.query;
@@ -82,5 +82,21 @@ router.delete('/creators/:id', (req, res) => {
   writeData(data);
   res.json({ success: true, removed });
 });
+
+router.post("/favaritos/:id", (req, res) => {
+  const data = readData();
+  const fav = {
+    id: Date.now(),
+    productId: req.params.id,
+  }
+  data.favaritos.push(fav);
+  writeData(data)
+  res.json(fav)
+})
+
+router.get("/get-favaritos", (req, res) => {
+  const data = readData(); 
+  res.json(data?.favaritos); 
+})
 
 module.exports = router;

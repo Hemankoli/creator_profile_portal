@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, } from 'framer-motion';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { IoMdHeart } from "react-icons/io";
+import { useCreators } from '../context/CreatorContext';
 
-export default function Card({ creator }) {
+
+export default function Card({ creator, handleFavaritos }) {
+    const { allFava } = useCreators();
     const initials = creator.name
         ? creator.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()
         : 'SM';
+
+    const isFavorite = useMemo(() => {
+        return allFava?.some(fav => String(fav.productId) === String(creator.id));
+    }, [allFava, creator.id]);
 
     return (
         <motion.div
@@ -29,6 +38,16 @@ export default function Card({ creator }) {
                             {creator.designation || 'Creator'}
                         </div>
                     </div>
+                    <button
+                        onClick={() => handleFavaritos(creator?.id)}
+                        className="text-xl hover:scale-110 transition-transform"
+                    >
+                        {isFavorite ? (
+                            <IoMdHeart className="text-red-500" />
+                        ) : (
+                            <FaRegHeart className="text-gray-400 hover:text-red-400" />
+                        )}
+                    </button>
                 </div>
                 <span className="text-md font-semibold text-blue-600">₹{creator.price} / Month</span>
             </div>

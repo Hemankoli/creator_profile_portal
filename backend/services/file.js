@@ -11,9 +11,10 @@ exports.readData = () => {
       creators: parsed.creators || [],
       users: parsed.users || [],
       logs: parsed.logs || [],
+      favaritos: parsed.favaritos || [],
     };
   } catch (e) {
-    return { creators: [], users: [], logs: [] };
+    return { creators: [], users: [], logs: [], favaritos: [] };
   }
 };
 
